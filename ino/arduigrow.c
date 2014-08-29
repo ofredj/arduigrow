@@ -1,5 +1,5 @@
-#include <dht.h>
 #include <time.h>
+#include <dht.h>
 #define ARDUIGROW_VERSION
 #define LIGHT_PIN A0
 #define PH_PIN 	A1
@@ -11,7 +11,7 @@
 #define PH_GAIN 9.6525 
 
 dht DHT;
-long last_dht_read = 0;
+static unsigned long last_dht_read = 0;
 
 bool _read_light()
 {
@@ -22,7 +22,7 @@ bool _read_light()
 float _read_temperature(void)
 {
   int chk = 0 ;
-  if (!last_dht_read || time(NULL) > (last_dht_read + 2)){
+  if (!last_dht_read || time(NULL) > (last_dht_read + 5)){
 	chk = DHT.read11(DHT11_PIN);
   } else {
         return(DHT.temperature);
@@ -50,7 +50,7 @@ float _read_temperature(void)
 float _read_humidity(void)
 {
   int chk = 0 ;
-  if (!last_dht_read || time(NULL) > (last_dht_read + 2)){
+  if (!last_dht_read || time(NULL) > (last_dht_read + 5)){
 	chk = DHT.read11(DHT11_PIN);
   } else {
         return(DHT.humidity);
