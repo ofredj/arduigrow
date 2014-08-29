@@ -1,0 +1,109 @@
+html,
+body {
+  height: 100%;
+}
+
+.navbar {
+  background-color: #1C7478;
+  color: #ffffff;
+}
+.dropdown a {
+  color: #ffffff;
+}
+
+/* Wrapper for page content to push down footer */
+ {
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 40px;
+  background-color: #1C7478;
+  color: #ffffff;
+  text-align: left;
+  width: 100%;
+  bottom: 0px;
+  position: relative;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.container {
+  width: auto;
+  max-width: 680px;
+  min-height: 80%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -40px;
+  /* Pad bottom by footer height */
+  padding: 0 0 40px;
+}
+
+#live-stream {
+	text-align: center;
+	display:block; margin: auto;
+}
+
+#chartdiv {
+	width		: 80%;
+	height		: 500px;
+	font-size	: 11px;
+	text-align: center;
+	display:block; margin: auto;
+}
+
+.block{
+	background : #FFF;
+	width : 960px;
+	padding : 20px 0 18px 0;
+	margin : 0 auto 2em;
+}
+
+#block ul{
+	list-style : none;
+	margin : 0;
+	padding : 0;
+	/* border-bottom : 1px solid #000; */
+	
+	text-align : center;
+}
+
+#block li{
+	display : inline-block;
+/*
+	
+	border : 1px solid #000;
+	border-bottom : none;
+	background : #EFEFEF;
+	
+	-moz-border-radius : 7px 7px 0 0;
+	-webkit-border-radius : 7px 7px 0 0;
+	border-radius : 7px 7px 0 0; */
+}
+
+#block li.active{
+	position : relative;
+	bottom : -1px;
+	background : #FFF;
+}
+
+#block li:hover{
+	background : #FFF;
+}
+
+#block li a{
+	display : block;
+	padding : 0.2em 0.5em 0.3em 0.5em;
+	color : #000;
+	text-decoration : none;
+	font-size : 16px;
+	color : #1C7478;
+	text-align: center;
+}
+
+#block li a:hover{
+	text-decoration : underline;
+}
