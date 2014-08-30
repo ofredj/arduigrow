@@ -37,22 +37,38 @@
         <div class="col-lg-4">
 	<a href="ec">
           <img class="img" src="img/EC.png" alt="Generic placeholder image" style="width: 64px; height: 64px;">
-          <h4>EC: 3.8</h4>
+          <h4>EC: <?echo $data['ec'];?></h4>
 	</a>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
 	<a href="webcam">
-          <img class="img" src="img/video.png" alt="Generic placeholder image" style="width: 64px; height: 64px;">
+          <img class="img" src="img/webcam.png" alt="Generic placeholder image" style="width: 64px; height: 64px;">
           <h4>Webcam</h4>
 	</a>
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
-<!--
       <div class="row">
+
         <div class="col-lg-4">
+	<a href="water">
           <img class="img" src="img/water.png" alt="Generic placeholder image" style="width: 64px; height: 64px;">
-          <h4>Water Tank: 64%</h4>
+          <h4>Water Tank: <?php 
+	$lvl="Low";
+	if ($data['water'] == 1){
+		$lvl='Medium';
+	} else if ($data['water'] == 2) {
+		$lvl='High'; 
+	} echo $lvl; ?></h4></a>
         </div>
+
+        <div class="col-lg-4">
+	<a href="movie">
+          <img class="img" src="img/video.png" alt="Generic placeholder image" style="width: 64px; height: 64px;">
+          <h4>Movie</h4>
+	</a>
+        </div><!-- /.col-lg-4 -->
+      </div>
+<!--
         <div class="col-lg-4">
           <img class="img" src="img/fertilizer.png" alt="Generic placeholder image" style="width: 64px; height: 64px;">
           <h4>Fertilizer Tank: 55%</h4>
@@ -61,7 +77,6 @@
           <img class="img" src="img/PH-down.png" alt="Generic placeholder image" style="width: 64px; height: 64px;">
           <h4>PH Down Tank: 60%</h4>
         </div>
-      </div>
 -->
 </div>
 

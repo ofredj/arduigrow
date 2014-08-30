@@ -8,6 +8,7 @@ require_once("../app/controllers/stream.php");
 require_once("../app/controllers/webcam.php");
 require_once("../app/controllers/ph.php");
 require_once("../app/controllers/ec.php");
+require_once("../app/controllers/water.php");
 
 Toro::serve(array(
     "/" => "HomeHandler",
@@ -19,6 +20,7 @@ Toro::serve(array(
     "/ec" => "ECHandler",
     "/stream" => "StreamHandler",
     "/webcam" => "WebcamHandler",
+    "/water" => "WaterHandler",
     "/movie" => "MovieHandler",
 ));
 

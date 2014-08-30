@@ -1,0 +1,11 @@
+#!/bin/bash
+CSV_FILE="/var/www/arduigrow/data/arduigrow.csv"
+# Run every 5 minutes
+INTERVAL=300
+bg
+cd /var/www/arduigrow/data
+while true
+do
+	/usr/bin/arduigrow csv >> $CSV_FILE;
+	sleep $INTERVAL;
+done

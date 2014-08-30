@@ -25,7 +25,7 @@ OBJS = $(patsubst %.c,%.o,$(patsubst %.cpp,%.o,$(SRCS)))
 
 %.o: %.cpp
 	@rm -f $@
-	$(CXX) $(CFLAGS) $(INCLUDES) -c $< -o $@ -Wno-deprecated-declarations -fpermissive -fPIC
+	$(CXX) $(CFLAGS) $(INCLUDES) -c $< -o $@ -Wno-deprecated-declarations -fPIC -fpermissive
 
 %.o: %.c
 	@rm -f $@
@@ -42,11 +42,15 @@ all: $(PROGRAM)
 
 $(PROGRAM): $(LIB)
 	$(CXX) $(CFLAGS) $(INCLUDES) -o $(PROGRAM) arduigrow.c $(LIB_STATIC)
+	$(CXX) $(CFLAGS) $(INCLUDES) -o ph_calibrate ph_calibrate.c $(LIB_STATIC)
 
 
 $(LIB): $(OBJS)
 	$(AR) cq $(LIB_STATIC) $(OBJS)
 #	$(CXX) -shared -Wl,-soname,$(LIB_SHARE) -o $(LIB_SHARE) $(OBJS)
 
+install: $(PREFIX)/usr/bin/$(PROGRAM)
+	install $(PROGRAM) $(PREFIX)/usr/bin/$(PROGRAM)
+
 clean:
-	rm -f $(LIB_STATIC) $(LIB_SHARE) $(OBJS) $(PROGRAM)
+	rm -f $(LIB_STATIC) $(LIB_SHARE) $(OBJS) $(PROGRAM) ph_calibrate

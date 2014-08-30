@@ -1,0 +1,69 @@
+#!/bin/bash
+# Run every hout
+SLEEP_INTERVAL=600
+WHOAMI=$(whoami)
+if [ ${WHOAMI} == 'root' ]
+then
+	echo "Can not be run as root"
+	exit 0;
+fi
+
+FFMPEG=$(which ffmpeg)
+ARDUIGROW=$(which arduigrow)
+SNAP_FILE="test002.jpg"
+SNAP_DIR="/var/www/arduigrow/data/"
+VIDEO_DIR="/var/www/arduigrow/public/video/"
+
+
+function create_slideshow()
+{
+	# Create new slideshow
+	${FFMPEG} -y -f image2 -r 1/5 -i ${SNAP_DIR}/snap_%d.jpg -pix_fmt yuv420p -r 25 "${SNAP_DIR}/slideshow.mp4"
+
+	# Clean snapshots
+	rm ${SNAP_DIR}/snap_*.jpg
+	
+	if [ -f ${VIDEO_DIR}/video.mp4 ]
+	then
+		echo "concat movies!"
+		# Append out new slideshow 
+		${FFMPEG} -i ${SNAP_DIR}/slideshow.mp4  -f mpegts ${SNAP_DIR}/slideshow.ts
+		${FFMPEG} -i ${VIDEO_DIR}/video.mp4 -f mpegts ${SNAP_DIR}/video.ts
+		rm ${VIDEO_DIR}/video.mp4
+		${FFMPEG} -i "concat:${SNAP_DIR}/video.ts|${SNAP_DIR}/slideshow.ts" ${VIDEO_DIR}/video.mp4 
+		rm ${SNAP_DIR}/slideshow.ts ${SNAP_DIR}/video.ts ${SNAP_DIR}/slideshow.mp4
+	else
+		echo "first movie available!"
+		mv ${SNAP_DIR}/slideshow.mp4 ${VIDEO_DIR}/video.mp4	
+	fi
+}
+
+function rotate_snapshots()
+{
+	new_snap=0;
+	count_max=$(ls -rl ${SNAP_DIR}/snap_*.jpg | perl -p -e "s/.*snap_(\d+)\.jpg/\1/g" | head -n 1)
+	new_snap=$(expr ${count_max} + 1);
+	mv "${SNAP_DIR}/${SNAP_FILE}" "${SNAP_DIR}/snap_${new_snap}.jpg"
+
+	# Every 6 snapshots (1 hour) create a slideshow video
+	if [ ${new_snap} -eq 6 ]
+	then
+		create_slideshow
+	fi
+}
+
+
+function run_snapshot()
+{
+	rm ${SNAP_DIR}/test*.jpg
+	echo "new snapshot!"
+	${FFMPEG} -f video4linux2 -i /dev/video0 -vframes 2 ${SNAP_DIR}/test%3d.jpg
+	rotate_snapshots
+}
+
+bg
+while true
+do
+	${ARDUIGROW} light && run_snapshot
+	sleep ${SLEEP_INTERVAL}
+done
