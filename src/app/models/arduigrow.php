@@ -18,6 +18,7 @@ class ArduiGrow_Model
 			$light = ($columns[3] == 'true') ? 1 : 0 ;
 			$pH = empty($columns[4]) ? null : $columns[4] ;
 			$EC = empty($columns[5]) ? null : $columns[5] ;
+			$water = empty($columns[6]) ? 0 : $columns[6] ;
 			$EC = rand(1,6) ;
 			$pH = rand(4,7) ;
 			/* upadte last values */
@@ -25,20 +26,18 @@ class ArduiGrow_Model
 				'date' => date('r', $columns[0]),
 				'temperature' => $columns[2],
 				'humidity' => $columns[1], 
-				'light' => $columns[3] );
+				'light' => $columns[3],
+				'ph' => $pH,
+				'ec' => $EC,
+				'water' => $water);
 			/* add data to metric series */
 			$timestamp =  $columns[0] * 1000 ;
 			$data['humidity'][] = array( $timestamp,  (float)$columns[1]);
 			$data['temperature'][] = array( $timestamp,  (float)($columns[2]));
 			$data['light'][] = array( $timestamp,  $light);
-			if ($pH) {
-				$data['ph'][] = array( $timestamp, (float) $pH);
-				$data['last']['ph'] = $pH;  
-			}
-			if ($EC) {
-				$data['ec'][] = array( $timestamp, (float) $EC);
-				$data['last']['ec'] = $EC;  
-			}
+			$data['water'][] = array( $timestamp,  (int)$water);
+			$data['ph'][] = array( $timestamp, (float) $pH);
+			$data['ec'][] = array( $timestamp, (float) $EC);
 		}
 		return $data;
 	}
